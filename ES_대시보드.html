@@ -37,7 +37,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:.7rem 1.5r
 .tab.on{color:var(--ac);border-bottom-color:var(--ac)}
 .content{padding:1.25rem;max-width:1400px;margin:0 auto;display:flex;flex-direction:column}
 .panel{display:none}
-.panel.on{display:block}
+.panel.on{display:flex;flex-direction:column}
 .kr{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.65rem;margin-bottom:1.25rem;order:-3}
 .kc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:.9rem 1.1rem}
 .kl{font-size:.68rem;color:var(--mt2);font-weight:500;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35rem}
@@ -1115,15 +1115,23 @@ function b2(){
 }
 
 function b3(){
+  var getV2=MODE==='biz'?gvB:gv;
+  var getN2=MODE==='biz'?gnB:gn;
+  var _c1Name=MODE==='biz'?BIZ_COL.c1Name:COL.c1Name;
+  var _c1Amt=MODE==='biz'?BIZ_COL.c1Amt:COL.c1Amt;
+  var _c2Name=MODE==='biz'?BIZ_COL.c2Name:COL.c2Name;
+  var _c2Amt=MODE==='biz'?BIZ_COL.c2Amt:COL.c2Amt;
+  var _gmv=MODE==='biz'?BIZ_COL.gmv:COL.gmv;
+  var _cat1=MODE==='biz'?BIZ_COL.cat1:COL.cat1;
   var baseD={},baseN={},baseG={};
   var dupD={},dupN={},dupG={};
   var hasC=0,noC=0,tG=0,tC=0;
   var catCpn={},catAll={};
   C.forEach(function(r){
-    var g=gn(r,COL.gmv);tG+=g;
-    var n1=gv(r,COL.c1Name),a1=gn(r,COL.c1Amt);
-    var n2=gv(r,COL.c2Name),a2=gn(r,COL.c2Amt);
-    var cat=gv(r,COL.cat1)||'기타';
+    var g=getN2(r,_gmv);tG+=g;
+    var n1=getV2(r,_c1Name),a1=getN2(r,_c1Amt);
+    var n2=getV2(r,_c2Name),a2=getN2(r,_c2Amt);
+    var cat=getV2(r,_cat1)||'기타';
     if(!catAll[cat])catAll[cat]=0;catAll[cat]++;
     var u=false;
     if(n1&&n1!=='null'){if(!baseD[n1]){baseD[n1]=0;baseN[n1]=0;baseG[n1]=0;}baseD[n1]+=a1;baseN[n1]++;baseG[n1]+=g;tC+=a1;u=true;if(!catCpn[cat])catCpn[cat]=0;catCpn[cat]++;}
